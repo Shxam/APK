@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPL Dhaba — Indian Prime Line</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="IPL Dhaba (Indian Prime Line) - Where Flavours Hit Like a Six! Enjoy tasty and healthy Veg & Non-Veg curries, biryani, and starters.">
+  <meta property="og:title" content="IPL Dhaba — Indian Prime Line">
+  <meta property="og:description" content="Where Flavours Hit Like a Six! Order tasty and healthy Indian food online.">
+  <meta property="og:image" content="./IPL DHABA ITEMS/star chicken starter.jpeg">
+  <!-- Fonts & Leaflet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-view="customer">
+
+  <!-- ==========================================================================
+       VIEW: CUSTOMER APP
+       ========================================================================== -->
+  <div class="view" id="view-customer">
+    <!-- Hero Section -->
+    <section class="hero-sec" id="hero">
+      <div class="hero-header">
+        <img src="logo.png" alt="IPL Dhaba Logo" class="hero-logo" id="customer-logo">
+        <a href="#/admin/login" class="hero-admin-link">Staff Login</a>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">Open Now</div>
+        <h1 class="hero-title">IPL Dhaba</h1>
+        <p class="hero-subtitle">Indian Prime Line — Tasty &amp; Healthy</p>
+        <p class="hero-tagline">Where Flavours Hit Like a Six! 🏏</p>
+      </div>
+    </section>
+
+    <!-- Search Bar Wrapper -->
+    <div class="sb-wrapper" id="search-bar-wrap">
+      <div class="sb-container">
+        <!-- SVG Search Icon -->
+        <svg class="sb-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input type="text" class="sb-input" id="search-input" placeholder="Search dishes by name or description...">
+      </div>
+    </div>
+
+    <!-- IPL Specials Section -->
+    <section class="specials-sec" id="ipl-specials-section">
+      <div class="specials-container">
+        <h2 class="specials-title">🔥 IPL Specials – Our Signature Dishes</h2>
+        <div class="carousel-wrapper">
+          <button class="carousel-nav-btn prev" id="specials-prev-btn" aria-label="Previous specials">&#10094;</button>
+          <div class="carousel-track-container" id="specials-carousel-container">
+            <div class="carousel-track" id="specials-carousel-track">
+              <!-- Rendered dynamically by app.js -->
+            </div>
+          </div>
+          <button class="carousel-nav-btn next" id="specials-next-btn" aria-label="Next specials">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Filter Bar (Sticky) -->
+    <nav class="cb-sticky" id="category-bar">
+      <div class="cb-scroll" id="category-list">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </nav>
+
+    <!-- Menu Grid Section -->
+    <section class="menu-section">
+      <div class="menu-grid" id="menu-grid">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Floating Cart Button -->
+    <button id="cart-fab" class="cf-fab hidden" data-action="open-cart" aria-label="Open cart">
+      <span>🛒</span>
+      <span id="cart-count">0</span> items · ₹<span id="cart-total">0</span>
+    </button>
+
+    <!-- Cart Bottom Sheet / Drawer -->
+    <div class="cd-overlay" id="cart-overlay" data-action="close-cart"></div>
+    <aside class="cd-drawer" id="cart-drawer" aria-hidden="true">
+      <div class="cd-header">
+        <h2 class="cd-title">Your Order</h2>
+        <button class="cd-close" data-action="close-cart" aria-label="Close cart">&times;</button>
+      </div>
+      <div class="cd-body">
+        <!-- Warning Banner for Min Order -->
+        <div id="cart-warning" class="cd-warn-banner" style="display: none;"></div>
+        
+        <!-- Cart Items -->
+        <div class="cd-items-list" id="cart-items">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- Summary -->
+        <div class="cd-summary">
+          <div class="cd-summary-row">
+            <span>Subtotal</span>
+            <span>₹<span id="cart-subtotal">0</span></span>
+          </div>
+          <div class="cd-summary-row">
+            <span>Delivery Fee</span>
+            <span>₹<span id="cart-delivery-fee">30</span></span>
+          </div>
+          <div class="cd-summary-row total">
+            <span>Total Amount</span>
+            <span>₹<span id="cart-total-amount">0</span></span>
+          </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <form class="cd-form" id="checkout-form" novalidate>
+          <div class="form-group">
+            <label for="cust-name">Your Name *</label>
+            <input type="text" id="cust-name" required placeholder="Enter your full name">
+          </div>
+          <div class="form-group">
+            <label for="cust-phone">Phone Number *</label>
+            <input type="tel" id="cust-phone" required placeholder="Enter 10-digit mobile number">
+          </div>
+          <div class="form-group">
+            <label for="cust-address">Delivery Address *</label>
+            <textarea id="cust-address" rows="3" required placeholder="Enter complete delivery address"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="cust-instructions">Delivery Instructions (Optional)</label>
+            <input type="text" id="cust-instructions" placeholder="e.g. Ring the bell, keep near gate">
+          </div>
+          <button type="submit" class="cd-submit-btn" id="place-order-btn">Place Order — Cash on Delivery</button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Item Details Modal -->
+    <div class="cd-overlay" id="detail-modal-overlay"></div>
+    <div class="cd-drawer" id="detail-modal" style="max-height: 75vh;">
+      <!-- Populated dynamically by app.js -->
+    </div>
+
+    <!-- Customer Section: Order Success Screen -->
+    <section class="order-sec" id="order-success" hidden>
+      <!-- Populated dynamically by app.js -->
+    </section>
+
+    <!-- Customer Section: Real-time Order Tracking -->
+    <section class="order-sec" id="order-tracking" hidden>
+      <!-- Populated dynamically by app.js -->
+    </section>
+  </div>
+
+
+  <!-- ==========================================================================
+       VIEW: ADMIN LOGIN
+       ========================================================================== -->
+  <div class="view" id="view-admin-login">
+    <div class="login-box">
+      <div class="login-logo-wrap">
+        <img src="logo.png" alt="IPL Dhaba Logo" class="login-logo">
+        <h2 class="login-title">Staff Portal</h2>
+        <p class="login-subtitle">Enter credentials to access dashboard</p>
+      </div>
+      <div id="login-error" class="login-error" style="display: none;"></div>
+      <form id="login-form" novalidate class="cd-form">
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" required placeholder="admin@ipldhaba.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="cd-submit-btn">Login</button>
+        <div style="text-align: center; margin-top: var(--sp-md); font-size: 0.85rem;">
+          <a href="#/" style="color: var(--saffron); font-weight: 600;">&larr; Back to Menu</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       VIEW: ADMIN DASHBOARD
+       ========================================================================== -->
+  <div class="view" id="view-admin">
+    <div class="admin-wrap">
+      <!-- Admin Header -->
+      <header class="ad-header" id="admin-header">
+        <div class="ad-logo-link">
+          <img src="logo.png" alt="IPL Dhaba Logo" class="ad-logo">
+          <h2 class="ad-title">Admin Dashboard</h2>
+        </div>
+        <div class="ad-meta-wrap">
+          <div class="ad-indicator">
+            <span class="ad-dot"></span>
+            <span id="admin-indicator-text">Realtime</span>
+          </div>
+          <span class="ad-user-info" id="admin-user-name">Admin</span>
+          <button class="ad-logout" data-action="logout">Logout</button>
+        </div>
+      </header>
+
+      <!-- Stat Cards -->
+      <div class="ad-stats" id="ad-stats-container">
+        <!-- Renders stats here -->
+      </div>
+
+      <!-- Tab Filters -->
+      <nav class="ad-tab-bar" id="order-tabs">
+        <button class="ad-tab active" data-action="filter-tab" data-tab="active">Active</button>
+        <button class="ad-tab" data-action="filter-tab" data-tab="all">All</button>
+        <button class="ad-tab" data-action="filter-tab" data-tab="completed">Completed</button>
+        <button class="ad-tab" data-action="filter-tab" data-tab="cancelled">Cancelled</button>
+      </nav>
+
+      <!-- Orders List Container -->
+      <div class="ad-order-list" id="admin-order-list">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       VIEW: DELIVERY STAFF VIEW
+       ========================================================================== -->
+  <div class="view" id="view-delivery">
+    <div class="dl-wrap">
+      <!-- Delivery Header -->
+      <header class="ad-header" id="delivery-header">
+        <div class="ad-logo-link">
+          <img src="logo.png" alt="IPL Dhaba Logo" class="ad-logo">
+          <h2 class="ad-title">Delivery Portal</h2>
+        </div>
+        <div class="ad-meta-wrap">
+          <span class="ad-user-info" id="delivery-user-name">Driver</span>
+          <button class="ad-logout" data-action="logout">Logout</button>
+        </div>
+      </header>
+
+      <!-- Assigned Orders List -->
+      <div id="delivery-order-list">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS from CDN -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Supabase JS SDK (for Realtime subscriptions) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- App Configuration (override these for your deployment) -->
+  <script>
+    // Fill in your Supabase project details here after setting up Supabase.
+    // Leave blank to run in demo mode (all data is in-memory, no backend needed).
+    window.APP_CONFIG = {
+      // Backend API URL (your Node.js/Express server)
+      // Development: 'http://localhost:3001'
+      // Production:  'https://your-railway-app.railway.app'
+      apiBase: 'http://localhost:3001',
+
+      // Supabase project URL and anon key (browser-safe)
+      // Get from: Supabase Dashboard → Settings → API
+      supabaseUrl:  '',   // e.g. 'https://abcdef.supabase.co'
+      supabaseAnon: ''    // e.g. 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+    };
+  </script>
+  <!-- Application JS -->
+  <script src="app.js"></script>
+</body>
+</html>
