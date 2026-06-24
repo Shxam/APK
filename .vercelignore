@@ -1,0 +1,16 @@
+# Exclude backend Express server from Vercel — deploy on Railway instead
+backend/
+server.js
+
+# Exclude docs and config files
+ARCHITECTURE.md
+DESIGN.md
+PRD.md
+README.md
+
+# Exclude DB files
+supabase/
+
+# Exclude dev files
+placeholder.jpg
+menuitems
